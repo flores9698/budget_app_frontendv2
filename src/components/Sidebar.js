@@ -19,7 +19,7 @@ import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import axios from "axios";
 import {TableBody, TableCell, TableHead, TableRow, Table, TableContainer, Button} from "@mui/material";
-import AddAccountDialog from "./AddAccountDialog";
+import AddAccountDialog from "./dialogs/AddAccountDialog";
 import ExpensesDashboard from "./ExpensesDashboard";
 
 const drawerWidth = 240;
