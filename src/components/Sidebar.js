@@ -85,7 +85,7 @@ export default function Sidebar() {
                 <List>
                     {
                         bankAccounts.map((bankAccount) => (
-                            <ListItem key={bankAccount.account_name} disablePadding>
+                            <ListItem key={bankAccount.account_id} disablePadding>
                                 <AccountBalanceSharpIcon/>
                                 <ListItemButton>
                                     <ListItemText primary={bankAccount.account_name}/>
@@ -132,7 +132,7 @@ export default function Sidebar() {
                         </TableHead>
                         <TableBody>
                             {bankAccounts.map((bankAccount) => (
-                                <TableRow key={bankAccount.account_name}>
+                                <TableRow key={bankAccount.account_id}>
                                     <TableCell>{bankAccount.account_name}</TableCell>
                                     <TableCell>{bankAccount.account_number}</TableCell>
                                     <TableCell>{bankAccount.balance}</TableCell>
