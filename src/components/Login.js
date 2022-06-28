@@ -7,7 +7,7 @@ import axios from "axios";
 import {Cookies} from "react-cookie";
 import {useNavigate} from 'react-router-dom'
 
-const baseUrl = 'http://localhost:8500';
+const baseUrl = 'http://192.168.0.14:8500';
 
 function Register() {
     const [username, setUsername] = React.useState("toby9698@gmail.com");
@@ -37,11 +37,12 @@ function Register() {
                         console.log(res.data.body.user.token);
                         const cookies = new Cookies() ;
                         cookies.set("token", res.data.body.user.token);
-                        cookies.set("userid", userInfo.id,cookiesOptions);
+                        cookies.set("userid", res.data.body.user.id,cookiesOptions);
+
                         //wait 2 seconds to redirect
                         setTimeout(() => {
                             console.log(userInfo);
-                            navigate("/welcome");
+                            navigate("/welcome",  );
 
                         }, 2000);
                     })

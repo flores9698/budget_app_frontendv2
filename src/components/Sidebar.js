@@ -13,14 +13,47 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import AccountBalanceSharpIcon from '@mui/icons-material/AccountBalanceSharp';
 import {Cookies} from "react-cookie";
 import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
+import axios from "axios";
+import {TableBody, TableCell, TableHead, TableRow, Table, TableContainer, Button} from "@mui/material";
+import AddAccountDialog from "./AddAccountDialog";
 
 const drawerWidth = 240;
 const cookies = new Cookies();
-
+const cookiesOptions = {expires: new Date(Date.now() + 3600 * 1000)}
+const baseUrl = 'http://192.168.0.14:8500';
 
 export default function Sidebar() {
+    const [userInfo, setUserInfo] = React.useState({});
+    const [bankAccounts, setBankAccounts] = React.useState([]);
+
+    const authToken = cookies.get("token");
+    const userId = cookies.get("userid");
+
+
+    const getBankAccounts = async () => {
+        const response = await fetch(
+            `${baseUrl}/bank_accounts/${userId}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`
+                },
+            }
+        );
+        const data = await response.json();
+        setBankAccounts(data.body.user)
+        cookies.set("bankAccounts", data.body.user, cookiesOptions);
+    };
+    React.useEffect(() => {
+        getBankAccounts();
+
+    }, []);
+
     const navigate = useNavigate();
     return (
         <Box sx={{display: 'flex'}}>
@@ -31,7 +64,7 @@ export default function Sidebar() {
             >
                 <Toolbar>
                     <Typography variant="h6" noWrap component="div">
-                        Permanent drawer
+                        My Budget App
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -50,33 +83,73 @@ export default function Sidebar() {
                 <Toolbar/>
                 <Divider/>
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                                </ListItemIcon>
-                                <ListItemText primary={text}/>
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+                    {
+                        bankAccounts.map((bankAccount) => (
+                            <ListItem key={bankAccount.account_name} disablePadding>
+                                <AccountBalanceSharpIcon/>
+                                <ListItemButton>
+                                    <ListItemText primary={bankAccount.account_name}/>
+                                </ListItemButton>
+                            </ListItem>
+
+                        ))}
+                    <Divider/>
                 </List>
                 <ListItemButton onClick={() => {
                     console.log("logout");
                     cookies.remove("token");
-                    cookies.remove("user");
+                    cookies.remove("userid");
                     navigate("/login");
 
 
                 }}>
                     <ListItemText primary={"Logout"}/>
+
                 </ListItemButton>
+                <Divider/>
             </Drawer>
             <Box
                 component="main"
-                sx={{flexGrow: 1, bgcolor: 'background.default', p: 3}}
+                sx={{flexGrow: 1, bgcolor: 'background.default ', p: 3}}
             >
                 <Toolbar/>
+                <Typography variant="h4" component="h4">
+                    Welcome
+                </Typography>
+
+                <Divider/>
+
+                {/*Show account info and balance on a table*/}
+                {/* eslint-disable-next-line react/jsx-no-undef */}
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Account Name</TableCell>
+                                <TableCell>Account Number</TableCell>
+                                <TableCell>Balance</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {bankAccounts.map((bankAccount) => (
+                                <TableRow key={bankAccount.account_name}>
+                                    <TableCell>{bankAccount.account_name}</TableCell>
+                                    <TableCell>{bankAccount.account_number}</TableCell>
+                                    <TableCell>{bankAccount.balance}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
+                <Box mt={8}>
+                    <AddAccountDialog/>
+
+                </Box>
+
+
+
+
                 <Typography paragraph>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
