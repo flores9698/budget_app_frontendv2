@@ -7,7 +7,7 @@ import axios from "axios";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
-const baseUrl = 'http://localhost:8500';
+const baseUrl = 'http://192.168.0.14:8500';
 
 function Register() {
     const [userInfo, setUserInfo] = useState({});
