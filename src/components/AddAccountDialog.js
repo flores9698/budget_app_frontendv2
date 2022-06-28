@@ -132,7 +132,7 @@ export default function AddAccountDialog() {
                         <Select
                             labelId={'bankName'}
                             id={'bankName'}
-                            // value={bankName[0].bank_name}
+                            // value={"Bac"}
                             label={'Bank Name'}
                             onChange={(e) => setBankName(e.target.value)}
                             sx={{
