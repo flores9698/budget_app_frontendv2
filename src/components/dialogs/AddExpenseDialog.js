@@ -12,6 +12,7 @@ import {useEffect} from "react";
 import Select from '@mui/material/Select';
 import {MenuItem} from "@mui/material";
 import Box from "@mui/material/Box";
+import AddCategoryDialog from "./AddCategoryDialog";
 
 
 const baseUrl = 'http://192.168.0.14:8500';
@@ -217,6 +218,7 @@ export default function AddExpenseDialog() {
                                      onChange={(e) => setAmount(e.target.value)}
                         />
                     </Form.Group>
+                    <AddCategoryDialog/>
 
 
                 </Form>

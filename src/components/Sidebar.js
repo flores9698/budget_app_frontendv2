@@ -21,6 +21,7 @@ import axios from "axios";
 import {TableBody, TableCell, TableHead, TableRow, Table, TableContainer, Button} from "@mui/material";
 import AddAccountDialog from "./dialogs/AddAccountDialog";
 import ExpensesDashboard from "./ExpensesDashboard";
+import AccountTable from "./AccountTable";
 
 const drawerWidth = 240;
 const cookies = new Cookies();
@@ -33,7 +34,6 @@ export default function Sidebar() {
 
     const authToken = cookies.get("token");
     const userId = cookies.get("userid");
-
 
     const getBankAccounts = async () => {
         const response = await fetch(
@@ -48,12 +48,14 @@ export default function Sidebar() {
         );
         const data = await response.json();
         setBankAccounts(data.body.user)
-        cookies.set("bankAccounts", data.body.user, cookiesOptions);
+        // cookies.set("bankAccounts", data.body.user, cookiesOptions);
     };
     React.useEffect(() => {
         getBankAccounts();
+        console.log(bankAccounts);
 
     }, []);
+
 
     const navigate = useNavigate();
     return (
@@ -114,36 +116,10 @@ export default function Sidebar() {
                 sx={{flexGrow: 1, bgcolor: 'background.default ', p: 3}}
             >
                 <Toolbar/>
-                <Typography variant="h4" component="h4">
-                    Welcome
-                </Typography>
 
-                <Divider/>
-
-                {/*Show account info and balance on a table*/}
-                {/* eslint-disable-next-line react/jsx-no-undef */}
-                <TableContainer>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Account Name</TableCell>
-                                <TableCell>Account Number</TableCell>
-                                <TableCell>Balance</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {bankAccounts.map((bankAccount) => (
-                                <TableRow key={bankAccount.account_id}>
-                                    <TableCell>{bankAccount.account_name}</TableCell>
-                                    <TableCell>{bankAccount.account_number}</TableCell>
-                                    <TableCell>{bankAccount.balance}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
 
                 <Box mt={8}>
+                    <AccountTable/>
                     <AddAccountDialog/>
 
                 </Box>

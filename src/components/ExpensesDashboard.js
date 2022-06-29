@@ -82,6 +82,9 @@ export default function ExpensesDashboard() {
                                 <TableCell>
                                     Amount
                                 </TableCell>
+                                <TableCell>
+                                    Account
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -91,10 +94,13 @@ export default function ExpensesDashboard() {
                                         {expense.expense_name}
                                     </TableCell>
                                     <TableCell>
-                                        {expense.date_added}
+                                        {expense.date_added.split("T")[0]}
                                     </TableCell>
                                     <TableCell>
                                         {expense.amount}
+                                    </TableCell>
+                                    <TableCell>
+                                        {expense.category_name}
                                     </TableCell>
                                 </TableRow>
                             ))}
