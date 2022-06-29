@@ -11,6 +11,7 @@ import {FormControl, FormLabel} from "react-bootstrap";
 import {useEffect} from "react";
 import Select from '@mui/material/Select';
 import {MenuItem} from "@mui/material";
+import Box from "@mui/material/Box";
 
 
 const baseUrl = 'http://192.168.0.14:8500';
@@ -102,7 +103,7 @@ export default function AddAccountDialog() {
 
 
     return (
-        <div>
+        <Box mt={2}>
             <Button variant="outlined" onClick={handleClickOpen}>
                 Add Account
             </Button>
@@ -173,6 +174,6 @@ export default function AddAccountDialog() {
                     <Button onClick={handleDialogClose}>Add Account</Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </Box>
     );
 }

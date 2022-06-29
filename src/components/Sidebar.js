@@ -120,8 +120,6 @@ export default function Sidebar() {
 
                 <Box mt={8}>
                     <AccountTable/>
-                    <AddAccountDialog/>
-
                 </Box>
 
                 <Box mt={10}>

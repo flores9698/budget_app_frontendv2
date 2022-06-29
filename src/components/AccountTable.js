@@ -4,6 +4,7 @@ import Divider from "@mui/material/Divider";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import {Cookies} from "react-cookie";
+import AddAccountDialog from "./dialogs/AddAccountDialog";
 
 const drawerWidth = 240;
 const cookies = new Cookies();
@@ -47,7 +48,7 @@ const AccountTable = () => {
 
             {/*Show account info and balance on a table*/}
             {/* eslint-disable-next-line react/jsx-no-undef */}
-            <TableContainer>
+            <TableContainer >
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -65,6 +66,7 @@ const AccountTable = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <AddAccountDialog/>
         </Box>
 
     );
